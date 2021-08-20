@@ -17,17 +17,29 @@ public class Team<T extends Participant> {
         this.participants.add(participant);
     }
 
-    public String play(Team<T> team) {
-        String winner = team.getName();
-        if (new Random().nextInt(2) == 0) { winner = this.name; }
+    private void getParticipantCongratulations(ArrayList<T> participants) {
+        for (T participant : participants) {
+            System.out.println(participant.getCongratulation());
+        }
+    }
+
+    public Team<T> play(Team<T> team) {
+        Team<T> winner = team;
+        if (new Random().nextInt(2) == 0) { winner = this; }
         return winner;
     }
 
     public void playWithLog(Team<T> team) {
-        System.out.println(String.format("Происходит игра... Выигрывает команда: %s", this.play(team)));
+        Team<T> winner = this.play(team);
+        System.out.println(String.format("Происходит игра... Выигрывает команда: %s", winner.getName()));
+        this.getParticipantCongratulations(winner.getParticipants());
     }
 
     public String getName() {
         return name;
+    }
+
+    public ArrayList<T> getParticipants() {
+        return participants;
     }
 }
